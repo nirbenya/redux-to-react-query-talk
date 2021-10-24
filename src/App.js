@@ -1,7 +1,17 @@
 import logo from './logo.svg';
 import './App.css';
+import {useDispatch} from "react-redux";
+import {fetchMovies} from "./redux/movies/movies-actions";
+import React from 'react';
+
 
 function App() {
+
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(fetchMovies())
+  }, [])
   return (
     <div className="App">
       <header className="App-header">
