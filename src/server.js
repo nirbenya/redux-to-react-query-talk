@@ -20,13 +20,13 @@ app.get('/api/movies', async (req, res) => {
 let db = [
 	{
 		id: 5,
-		name: 'Lord of the rings',
+		name: 'Lord of the Rings',
 		likes: 1780,
 		brief: "the saga of a group of sometimes reluctant heroes who set forth to save their world from consummate evil. Its many worlds and creatures were drawn from Tolkien's extensive knowledge of philology and folklore.",
 	},
 	{
 		id: 1,
-		name: 'Star wars',
+		name: 'Star Wars',
 		likes: 543,
 		brief: 'Star Wars is an American epic space opera multimedia franchise created by George Lucas, which began with the eponymous 1977 film and quickly became a worldwide pop-culture phenomenon.',
 	},
@@ -66,8 +66,7 @@ app.put('/api/movies/:id', (req, res) => {
 			db[index] = { ...db[index], ...movie };
 			console.log(db[index]);
 			await delay(2000);
-
-			res.send(db[index]);
+			res.send(db);
 		}
 	});
 });

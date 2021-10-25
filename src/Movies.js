@@ -29,12 +29,6 @@ export const useMovies = (options = {}) => {
 };
 
 function Movies() {
-	// const dispatch = useDispatch();
-
-	// React.useEffect(() => {
-	// 	dispatch(fetchMovies());
-	// }, []);
-
 	const { data: movies, isLoading } = useMovies();
 
 	if (isLoading)

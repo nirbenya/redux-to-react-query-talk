@@ -6,6 +6,7 @@ import { MdArrowBack, MdFavorite } from 'react-icons/md';
 import Button from '@mui/material/Button';
 import { useMutation, useQueryClient } from 'react-query';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useHistory } from 'react-router-dom';
 
 const useUpdateMovie = id => {
 	const queryClient = useQueryClient();
@@ -27,20 +28,24 @@ const useUpdateMovie = id => {
 		},
 		{
 			onSuccess: data => {
-				// we can either invalidate
-				queryClient.invalidateQueries('movies');
-				// or update the cache directly with the returned data
-				// queryClient.setQueryData(['movies'], data);
+				// we can either update the cache directly with the server response
+				queryClient.setQueryData('movies', data);
+				// or invalidate the query for future refetch
+				// queryClient.invalidateQueries('movies');
 			},
 		},
 	);
 };
 
 function Movie() {
-	let { id } = useParams();
+	const { id } = useParams();
+	const history = useHistory();
 	const { data: movies, isLoading } = useMovies({ enabled: false });
-	const { mutate: updateMovie, isLoading: isUpdating } = useUpdateMovie(id);
-	if (isLoading)
+	const { mutate: updateMovie, isLoading: isUpdating, isSuccess } = useUpdateMovie(id);
+
+	if (isSuccess) history.push('/');
+
+	if (isLoading || isUpdating)
 		return (
 			<div className="loader">
 				<CircularProgress />
@@ -48,6 +53,7 @@ function Movie() {
 		);
 
 	const movie = movies.find(movie => movie.id === parseInt(id));
+
 	return (
 		<div className="movie">
 			<Link to="/" className="back">
