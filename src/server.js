@@ -8,6 +8,10 @@ app.use(cors({ origin: true, credentials: true }));
 
 app.options('*', cors({ origin: true, credentials: true })); // include before other routes
 
+app.get('/api/movies', (req, res) => {
+	res.send(db);
+});
+
 let db = [
 	{ id: 1, name: 'Star wars', likes: 0 },
 	{ id: 2, name: 'Matrix', likes: 0 },
@@ -17,10 +21,6 @@ let db = [
 	{ id: 3242, name: 'Tenet', likes: 0 },
 	{ id: 234234, name: 'Inception', likes: 0 },
 ];
-
-app.get('/api/movies', (req, res) => {
-	res.send(db);
-});
 
 app.post('/api/movies', (req, res) => {
 	const movie = req.body || {};
